@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths(){
+    const url = `${import.meta.env.PUBLIC_API_URL}/guitarras?populate=imagen`
+    const respuesta = await fetch(url);
+    const {data} = await respuesta.json();
+    return data.map(guitarra => ({
+        params: {
+            id: guitarra.attributes.url,
+        },
+        props: {
+            guitarra: guitarra.attributes
+        }
+    }))
+}
+
+console.log(Astro.params)
+console.log(Astro.props)
+---
+
+<Layout title="TIenda virtual" description="Tienda de instrumentos online, guitarras, cursos, blog y más">
+    <main class="guitarra">
+        <h1>Rounting dinamico</h1>
+    </main>
+</Layout>
